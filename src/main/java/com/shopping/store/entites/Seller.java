@@ -1,7 +1,9 @@
 package com.shopping.store.entites;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -30,6 +32,10 @@ public class Seller {
             @AttributeOverride(name = "password",column = @Column(name = "sell_password"))
     })
     private Account account;
+
+
+    @OneToMany(mappedBy = "seller")
+    private Set<ProductSeller> productSellers = new HashSet<>();
 
 
 
@@ -91,4 +97,11 @@ public class Seller {
         this.account = account;
     }
 
+    public Set<ProductSeller> getProductSellers() {
+        return productSellers;
+    }
+
+    public void setProductSellers(Set<ProductSeller> productSellers) {
+        this.productSellers = productSellers;
+    }
 }

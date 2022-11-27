@@ -1,7 +1,8 @@
 package com.shopping.store.entites;
 
 import javax.persistence.*;
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -104,6 +105,8 @@ public class Customer {
     public void setAccount(Account account) {
         this.account = account;
     }
+
+
 
 
 }
