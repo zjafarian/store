@@ -2,7 +2,6 @@ package com.shopping.store.entites;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -15,14 +14,16 @@ public class Seller {
     @Column(name = "sell_id")
     private Long sellerId;
 
-    @Column(name = "sell_firstname")
-    private String firstname;
 
-    @Column(name = "sell_lastname")
-    private String lastname;
 
-    @Column(name = "sell_national_code")
-    private String nationalCode;
+    @Embedded
+    @AttributeOverrides(value = {
+            @AttributeOverride(name = "firstname", column = @Column(name = "sell_firstname")),
+            @AttributeOverride(name = "lastname", column =@Column(name = "sell_lastname")),
+            @AttributeOverride(name = "national_code",column = @Column(name = "sell_national_code"))
+    })
+
+    private Person seller;
 
 
     @Embedded
@@ -45,17 +46,11 @@ public class Seller {
     public Seller() {
     }
 
-    public Seller(String firstname,
-                  String lastname,
-                  String nationalCode,
-                  Account account) {
-
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.nationalCode = nationalCode;
+    public Seller(Person seller, Account account, Set<ProductSeller> productSellers) {
+        this.seller = seller;
         this.account = account;
+        this.productSellers = productSellers;
     }
-
 
     public Long getSellerId() {
         return sellerId;
@@ -65,29 +60,7 @@ public class Seller {
         this.sellerId = sellerId;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getNationalCode() {
-        return nationalCode;
-    }
-
-    public void setNationalCode(String nationalCode) {
-        this.nationalCode = nationalCode;
-    }
 
     public Account getAccount() {
         return account;
@@ -103,5 +76,13 @@ public class Seller {
 
     public void setProductSellers(Set<ProductSeller> productSellers) {
         this.productSellers = productSellers;
+    }
+
+    public Person getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Person seller) {
+        this.seller = seller;
     }
 }

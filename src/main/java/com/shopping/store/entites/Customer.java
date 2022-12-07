@@ -3,7 +3,6 @@ package com.shopping.store.entites;
 import javax.persistence.*;
 
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "t_customer")
@@ -14,14 +13,14 @@ public class Customer {
     @Column(name = "cus_id")
     private Long customerId;
 
-    @Column(name = "cus_firstname")
-    private String firstname;
 
-    @Column(name = "cus_lastname")
-    private String lastname;
-
-    @Column(name = "cus_national_code")
-    private String nationalCode;
+    @Embedded
+    @AttributeOverrides(value = {
+            @AttributeOverride(name = "firstname", column = @Column(name = "cus_firstname")),
+            @AttributeOverride(name = "lastname", column =@Column(name = "cus_lastname")),
+            @AttributeOverride(name = "national_code",column = @Column(name = "cus_national_code"))
+    })
+    private Person customer;
 
     @Column(name = "cus_birthday")
     @Temporal(TemporalType.DATE)
@@ -44,16 +43,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String firstname,
-                    String lastname,
-                    String nationalCode,
-                    Date customerBirthday,
-                    Account account) {
-
-
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.nationalCode = nationalCode;
+    public Customer(Person customer, Date customerBirthday, Account account) {
+        this.customer = customer;
         this.customerBirthday = customerBirthday;
         this.account = account;
     }
@@ -66,29 +57,6 @@ public class Customer {
         this.customerId = customerId;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getNationalCode() {
-        return nationalCode;
-    }
-
-    public void setNationalCode(String nationalCode) {
-        this.nationalCode = nationalCode;
-    }
 
     public Date getCustomerBirthday() {
         return customerBirthday;
@@ -106,7 +74,11 @@ public class Customer {
         this.account = account;
     }
 
+    public Person getCustomer() {
+        return customer;
+    }
 
-
-
+    public void setCustomer(Person person) {
+        this.customer = person;
+    }
 }

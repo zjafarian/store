@@ -1,5 +1,8 @@
 package com.shopping.store.entites;
 
+import org.assertj.core.util.Preconditions;
+import org.springframework.data.repository.Repository;
+
 import javax.persistence.*;
 
 @Entity
@@ -25,6 +28,9 @@ public class ProductSeller {
     public ProductSeller(Product product, Seller seller) {
         this.product = product;
         this.seller = seller;
+
+
+
         productSellerId = new ProductSellerId(product.getProductId(),seller.getSellerId());
     }
 
