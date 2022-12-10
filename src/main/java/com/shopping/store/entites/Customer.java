@@ -23,7 +23,7 @@ public class Customer {
     private Person customer;
 
     @Column(name = "cus_birthday")
-    @Temporal(TemporalType.DATE)
+    //@Temporal(TemporalType.DATE)
     private Date customerBirthday;
 
     @Embedded
