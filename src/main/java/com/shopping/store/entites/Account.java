@@ -1,9 +1,15 @@
 package com.shopping.store.entites;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
+@Builder
+
 public class Account {
 
     @Column(name = "email")

@@ -17,7 +17,7 @@ public class CustomerController {
     @Autowired
     CustomerServiceImpl customerService;
 
-    @PostMapping
+   /* @PostMapping
     public Customer add(@RequestBody Customer customer){
         try {
             return customerService.save(customer);
@@ -25,5 +25,5 @@ public class CustomerController {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 }

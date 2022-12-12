@@ -1,11 +1,14 @@
 package com.shopping.store.entites;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 
 import java.sql.Date;
 
 @Entity
 @Table(name = "t_customer")
+
 public class Customer {
 
     @Id

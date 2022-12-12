@@ -1,21 +1,29 @@
 package com.shopping.store.services.impls;
 
 import com.shopping.store.entites.Customer;
+
+import com.shopping.store.exceptions.ValidationPhoneNumberException;
 import com.shopping.store.repositories.CustomerRepository;
 import com.shopping.store.repositories.base.BaseRepository;
 import com.shopping.store.services.CustomerService;
 import com.shopping.store.services.base.impls.BaseServiceImpl;
+import com.shopping.store.utils.PhoneNumberValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@PropertySource("classpath:application.properties")
 public class CustomerServiceImpl extends BaseServiceImpl<Customer,Long> implements CustomerService{
 
 
     private CustomerRepository customerRepository;
+    @Value("${phone.number.not.valid}")
+    private String MESSAGE;
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -33,6 +41,10 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer,Long> implemen
 
     @Override
     public Customer save(Customer entity) {
+        if (!PhoneNumberValidation.validationPhoneNumber(entity.getAccount().getPhoneNumber()))
+            throw new ValidationPhoneNumberException(MESSAGE);
+
+
         return super.save(entity);
     }
 
