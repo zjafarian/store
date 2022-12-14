@@ -1,7 +1,9 @@
 package com.shopping.store.exceptions;
 
 
+import com.shopping.store.messages.ErrorMessages;
 import com.shopping.store.messages.ErrorResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,12 +22,11 @@ import java.util.Set;
 import static java.util.stream.Collectors.toList;
 
 @ControllerAdvice
-@PropertySource("classpath:application.properties")
 public class ControlException {
 
 
-    @Value("${entry.null}")
-    private String MESSAGE_NULL_ENTRY;
+    @Autowired
+    private ErrorMessages errorMessages;
 
 
     @ExceptionHandler
@@ -93,7 +94,7 @@ public class ControlException {
 
 
     private ErrorResponse buildNullPointerErrors() {
-         return new ErrorResponse(500, MESSAGE_NULL_ENTRY, new Date().getTime());
+         return new ErrorResponse(500, errorMessages.getMESSAGE_NULL_ENTRY(), new Date().getTime());
 
     }
 

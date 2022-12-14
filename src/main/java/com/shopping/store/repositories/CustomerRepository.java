@@ -9,7 +9,6 @@ import java.util.Optional;
 public interface CustomerRepository extends BaseRepository<Customer,Long> {
 
 
+    //find by customer with phone number
     Optional<Customer> findCustomerByAccount_PhoneNumber(String phoneNumber);
-
-
 }
