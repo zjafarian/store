@@ -1,4 +1,4 @@
-package com.shopping.store.exceptions;
+package com.shopping.store.messages;
 
 public class ErrorResponse {
 

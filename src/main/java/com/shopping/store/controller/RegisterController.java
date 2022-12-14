@@ -3,9 +3,12 @@ package com.shopping.store.controller;
 
 import com.shopping.store.dto.RegisterCustomerRequestDto;
 import com.shopping.store.entites.Customer;
+import com.shopping.store.exceptions.ExistPhoneNumberException;
 import com.shopping.store.mapper.RegisterCustomerMapper;
+import com.shopping.store.messages.ResponseMessage;
 import com.shopping.store.services.impls.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -30,18 +33,16 @@ public class RegisterController {
 
 
     @PostMapping
-    public ResponseEntity<?> registerCustomer(@Valid @RequestBody RegisterCustomerRequestDto customerRequestDto)
-            throws ConstraintViolationException {
+    public ResponseEntity<ResponseMessage<?>> registerCustomer(@Valid @RequestBody RegisterCustomerRequestDto customerRequestDto)
+            throws ConstraintViolationException, NullPointerException, ExistPhoneNumberException {
 
         Customer customer = customerMapper.toCustomer(customerRequestDto);
 
         customerService.save(customer);
+        ResponseMessage responseMessage = ResponseMessage.withResponseData(customer, "customer Created Successfully", "message");
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
+        return new ResponseEntity<ResponseMessage<?>>(responseMessage, HttpStatus.CREATED);
     }
-
-
 
 
 }

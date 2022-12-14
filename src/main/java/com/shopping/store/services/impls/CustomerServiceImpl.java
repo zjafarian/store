@@ -2,13 +2,13 @@ package com.shopping.store.services.impls;
 
 import com.shopping.store.entites.Customer;
 
+import com.shopping.store.exceptions.ExistPhoneNumberException;
 import com.shopping.store.exceptions.ValidationPhoneNumberException;
 import com.shopping.store.repositories.CustomerRepository;
 import com.shopping.store.repositories.base.BaseRepository;
 import com.shopping.store.services.CustomerService;
 import com.shopping.store.services.base.impls.BaseServiceImpl;
 import com.shopping.store.utils.PhoneNumberValidation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -22,8 +22,13 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer,Long> implemen
 
 
     private CustomerRepository customerRepository;
+
     @Value("${phone.number.not.valid}")
-    private String MESSAGE;
+    private String MESSAGE_PHONE_IS_NOT_CORRECT;
+
+
+    @Value("${phone.number.not.unique}")
+    private String MESSAGE_PHONE_IS_EXISTED;
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -42,7 +47,11 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer,Long> implemen
     @Override
     public Customer save(Customer entity) {
         if (!PhoneNumberValidation.validationPhoneNumber(entity.getAccount().getPhoneNumber()))
-            throw new ValidationPhoneNumberException(MESSAGE);
+            throw new ValidationPhoneNumberException(MESSAGE_PHONE_IS_NOT_CORRECT);
+
+
+        if (customerRepository.findCustomerByAccount_PhoneNumber(entity.getAccount().getPhoneNumber()).isPresent())
+            throw new ExistPhoneNumberException(MESSAGE_PHONE_IS_EXISTED);
 
 
         return super.save(entity);
