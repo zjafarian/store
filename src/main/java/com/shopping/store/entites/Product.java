@@ -5,7 +5,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "t_product")
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

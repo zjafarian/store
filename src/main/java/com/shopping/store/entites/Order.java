@@ -5,7 +5,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "t_order")
-public class Order {
+public class Order extends BaseEntity {
 
 
     @Id

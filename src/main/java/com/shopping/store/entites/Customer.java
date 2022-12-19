@@ -9,7 +9,7 @@ import java.sql.Date;
 @Entity
 @Table(name = "t_customer")
 
-public class Customer {
+public class Customer extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,6 @@ public class Customer {
     private Person customer;
 
     @Column(name = "cus_birthday")
-    //@Temporal(TemporalType.DATE)
     private Date customerBirthday;
 
     @Embedded

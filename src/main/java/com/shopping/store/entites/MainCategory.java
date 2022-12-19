@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "t_main_category")
-public class MainCategory {
+public class MainCategory extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_cart")
-public class Cart {
+public class Cart extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

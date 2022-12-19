@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_sub_category")
-public class SubCategory {
+public class SubCategory extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
